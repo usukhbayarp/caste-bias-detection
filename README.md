@@ -12,6 +12,25 @@ This project replicates the **ALBERT baseline** and introduces **Dynamic Identit
 ## 📂 Project Structure
 
 ```text
+├── IndiCASA_dataset - caste.csv        # IndiCASA dataset
+├── indicasa_train_seeds.csv            # Filtered high-quality seeds
+├── indicasa_final_train_ready.csv      # Augmented & Balanced training data
+├── indicasa_test_gold.csv              # Gold standard test set (80 examples)
+├── MGSD.csv                            # MGSD dataset, used for baseline
+├── SeeGULL - GPT Augmentation.csv      # SeeGULL dataset, used for baseline
+├── Winoqueer - GPT Augmentation.csv    # Winoqueer dataset, used for baseline
+├── model_output_baseline/              # Replicated ALBERT Baseline (Zero-Shot)
+├── model_exp2_albert_indicasa/         # Standard Fine-Tuned Model
+├── model_exp3_albert_masking/          # Adapted (Masking) Model (Champion)
+├── assignment_notebook.ipynb           # Main experiment notebook (Training & Eval)
+├── app.py                              # Streamlit Demo Application
+├── requirements.txt                    # Project dependencies
+├── README.md                           # Project documentation
+```
+
+
+TODO: convert file structure to follow following structure
+```text
 ├── data/
 │   ├── indicasa_train_seeds.csv       # Filtered high-quality seeds
 │   ├── indicasa_final_train_ready.csv # Augmented & Balanced training data
@@ -53,17 +72,6 @@ conda activate caste_bias
 pip install -r requirements.txt
 ```
 
-Ensure the file includes:
-
-- torch  
-- transformers  
-- streamlit  
-- shap  
-- lime  
-- pandas  
-- scikit-learn  
-- datasets  
-
 ---
 
 ## 🚀 How to Reproduce Results
@@ -75,12 +83,13 @@ All experiments are in **assignment_notebook.ipynb**.
 ### **Step 1: Baseline Replication (Zero-Shot)**
 
 **Goal:** Replicate ALBERT baseline on EMGSD dataset.  
-**Action:** Run Cells 1–5 in the notebook.  
+**Action:** Run Cells 1–4 in the notebook.  
 **Expected Metric:** *Macro F1 ≈ 0.80 (±5%)*.
 
 ---
 
 ### **Step 2: Dataset Curation (IndiCASA)**
+https://github.com/cerai-iitm/IndiCASA/blob/main/IndiCASA_dataset/csv_datasets/IndiCASA/IndiCASA_dataset%20-%20caste.csv
 
 **Goal:** Prepare the Indian-context dataset.  
 **Action:** Run “Data Curation” section.
@@ -92,7 +101,11 @@ Process includes:
 - Augmenting with “Hard Negatives” & “Identity Swaps”  
 - Class balancing  
 
-**Output file:** `indicasa_final_train_ready.csv`
+**Output files:**
+
+Train: `indicasa_final_train_ready.csv`
+
+Test: `indicasa_test_gold.csv`
 
 ---
 
@@ -107,7 +120,7 @@ Process includes:
 
 - Batch Size: 16  
 - Learning Rate: 2e-5  
-- Epochs: 10 (Early Stopping)  
+- Epochs: 10
 - Loss: Weighted Cross-Entropy (Neutral=1.0, Stereotype=2.0)
 
 ---
@@ -145,13 +158,11 @@ streamlit run app.py
 | Model                    | Macro F1 | Bias Status     | Key Observation |
 |-------------------------|----------|-----------------|-----------------|
 | Baseline (Zero-Shot)    | 0.57     | ⚠️ High Bias    | Fails on Indian-specific slurs |
-| IndiCASA (Standard)     | 0.77     | ⚠️ Identity Bias | Flags phrases like “Dalit CEO” as toxic |
-| IndiCASA + Masking      | 0.74     | ✅ Low Bias      | Correctly handles identity-neutral contexts |
+| IndiCASA (Standard)     | 0.71     | ⚠️ Identity Bias | Flags phrases like “Dalit CEO” as toxic |
+| IndiCASA + Masking      | 0.78     | ✅ Low Bias      | Correctly handles identity-neutral contexts |
 
 **Statistical Significance:**  
-McNemar’s Test (p = 0.26) → Accuracy drop in masking model is *not* statistically significant.
-
-This validates the fairness–utility trade-off.
+McNemar’s Test (p = 0.21) indicates the accuracy difference between Standard and Masking is not statistically significant, but the reduction in False Positives (Bias) is qualitatively substantial.
 
 ---
 
