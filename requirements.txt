@@ -33,7 +33,7 @@ datasets==3.1.0
 debugpy==1.8.16
 decorator==5.2.1
 dill==0.3.8
-en_core_web_lg==3.8.0
+en_core_web_lg @ https://github.com/explosion/spacy-models/releases/download/en_core_web_lg-3.8.0/en_core_web_lg-3.8.0-py3-none-any.whl#sha256=293e9547a655b25499198ab15a525b05b9407a75f10255e405e8c3854329ab63
 executing==2.2.1
 fief-client==0.20.0
 filelock==3.16.1
