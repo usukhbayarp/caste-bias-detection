@@ -122,3 +122,4 @@ nltk==3.9.2
 seaborn==0.13.2
 statsmodels==0.14.6
 optuna==4.6.0
+streamlit==1.52.0

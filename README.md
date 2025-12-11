@@ -89,7 +89,7 @@ All experiments are in **assignment_notebook.ipynb**.
 ---
 
 ### **Step 2: Dataset Curation (IndiCASA)**
-https://github.com/cerai-iitm/IndiCASA/blob/main/IndiCASA_dataset/csv_datasets/IndiCASA/IndiCASA_dataset%20-%20caste.csv
+https://github.com/cerai-iitm/IndiCASA
 
 **Goal:** Prepare the Indian-context dataset.  
 **Action:** Run “Data Curation” section.
