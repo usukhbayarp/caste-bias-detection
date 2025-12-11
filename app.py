@@ -190,7 +190,6 @@ if st.session_state.audit_results:
                     # 1. Explain Standard (IndiCASA)
                     with lime_col1:
                         st.markdown("**2. Baseline Albert + indiCASA:**")
-                        # UPDATED: Using pipe_standard instead of pipe_baseline
                         html_2 = run_lime(res["input"], pipe_standard)
                         components.html(html_2, height=200, scrolling=True)
                         
